@@ -5,9 +5,9 @@ sidebar_link: true
 ---
 
 <p class="message">
-  Hey there! This page is included as an example. Feel free to customize it
-  for your own use upon downloading. Carry on!
+  Hanbyul Lee
 </p>
 
-To make pages show up in the sidebar, add `sidebar_link: true` to the front
-matter.
+- 2017.08 - present 개발자 @ IDINCU (Opensurvey TEAM)
+- 2012.11 - present 유부남 @ 집
+- 2008.11 - present 바리스타 @ 집, Truchillo, Starbucks, etc.
