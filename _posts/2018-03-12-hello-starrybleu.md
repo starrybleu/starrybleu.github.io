@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Hello, Github 페이지
+comments: true
 ---
 
 #### 한동안 바쁘다는 핑계로 내버려둔 티스토리 블로그.
