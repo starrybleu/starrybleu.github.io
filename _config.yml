@@ -3,9 +3,9 @@ markdown:         kramdown
 highlighter:      rouge
 
 # Setup
-title:            어제보다 나은 나
+title:            채식지향주의 개발자
 tagline:          'github starrybleu'
-description:      '남과 비교하지 말고 지금의 내가 이전의 나보다 더 나아졌는지 비교하자.'
+description:      '어제보다 나은 오늘,'
 url:              https://starrybleu.github.io/
 baseurl:          # the optional subpath of your site, e.g. "/blog"
                   # NB: This applies to all pages in your Jekyll site.
