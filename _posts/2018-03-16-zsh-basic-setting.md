@@ -1,6 +1,7 @@
 ---
 layout: post
 title: CentOS Zsh 기본 및 자주 쓰는 플러그인 설치
+category: 리눅스
 comments: true
 ---
 ```
