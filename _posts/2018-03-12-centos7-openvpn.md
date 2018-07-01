@@ -1,6 +1,7 @@
 ---
 layout: post
-title: 삽질
+category: 리눅스
+title: hostname 변경으로 인한 yum repository 삽질
 comments: true
 ---
 

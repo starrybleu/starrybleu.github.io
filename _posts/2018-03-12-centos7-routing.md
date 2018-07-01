@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 리눅스
 title: CentOS7 Routing 라우팅
 comments: true
 ---

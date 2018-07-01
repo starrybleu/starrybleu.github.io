@@ -8,6 +8,6 @@ sidebar_link: true
   Hanbyul Lee
 </p>
 
-- 2017.08 - present 개발자 @ IDINCU (Opensurvey TEAM)
-- 2012.11 - present 유부남 @ 집
-- 2008.11 - present 바리스타 @ 집, Truchillo, Starbucks, etc.
+- 2016.10 - present 개발자
+- 2012.11 - present 유부남
+- 2008.11 - present 바리스타
