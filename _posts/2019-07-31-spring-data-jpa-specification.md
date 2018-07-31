@@ -15,6 +15,7 @@ Spring Data JPA 를 쓰면서, 다양한 어려움에 부딪히게 된다. 그 �
 
 ### 사용하려면,
 1. Repository interface 에서 아래와 같이 두 인터페이스를 확장한다.
+
 ```java
 public interface ClientRepository extends JpaRepository<Client, Long>, JpaSpecificationExecutor<Client> {
 
@@ -22,6 +23,7 @@ public interface ClientRepository extends JpaRepository<Client, Long>, JpaSpecif
 ```
 
 2. Repository를 사용하는 Service Layer (어떤이에게는 Controller Layer) 에서 Specification 을 사용할 수 있는 `JpaSpecificationExecutor`의 5가지 메소드를 활용
+
 ```java
     @Transactional(readOnly = true)
     public Page<Client> getClientsInGroup(long groupNo, Pageable pageable, Map<String, Object> filter) {
