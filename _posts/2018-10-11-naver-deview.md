@@ -303,3 +303,7 @@ ShardingTaskExecutorPoolMinSize: 10 (default: 1) - 단위 : 개 per core
 ### Raster
 - 비트맵을 찍는 과정이라 생각하면 됨
 
+# 처음 가본 데뷰에 대한 인상
+
+- 내년부터는 꼭 듣고 싶은 세션으로 채워질 수 있을 때만 가야겠다.
+- 그래도 오랜만에 본 사람들이 많아서 좋았다.
