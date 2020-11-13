@@ -189,14 +189,65 @@ Rails has opinions about the best way to do many things in a web application, an
 - 외부 서비스를 사용하지 않고도 손쉽게 Service Discovery(Eureka) 와 Feign 이라는 선언적인 Rest Client 만으로도 작은 MSA 를 구축할 수 있었습니다. (꼭 Feign 을 써야할 필요는 없습니다.)
 - 또한 복잡하고 큰 MSA 를 구현함에 있어서도 spring cloud 의 여러 도구들을 활용하면 분산 시스템을 구축하기가 쉽고 편합니다.
 
+  ```java
+  // Eureka Server
+  @SpringBootApplication
+  @EnableEurekaServer // Eureka 서버로 사용할 애플리케이션에 이 어노테이션만 달아주면 기본적인 설정은 끝
+  public class Application {
+
+      public static void main(String[] args) {
+          new SpringApplicationBuilder(Application.class).web(true).run(args);
+      }
+
+  }
+
+  // Feign
+  @FeignClient("stores") // Service Discovery(Spring Eureka) 를 통해 stores 라는 서비스를 이용하는 Client 로 선언
+  public interface StoreClient {
+      @RequestMapping(method = RequestMethod.GET, value = "/stores")
+      List<Store> getStores();
+
+      @RequestMapping(method = RequestMethod.POST, value = "/stores/{storeId}", consumes = "application/json")
+      Store update(@PathVariable("storeId") Long storeId, Store store);
+  }
+
+  ```
 ### Static Type (java, kotlin)
 - Spring 을 개발할 때 주로 사용하는 언어인 Java 와 Kotlin 은 static type 을 채택하였습니다.
 - 최근 TypeScript 의 성장세, Ruby 도 3.0 버전 이후부터는 static type 을 지원하는 추세로 봐서는 엔터프라이즈 웹 어플리케이션을 개발할 때는 static type 이 더 유리하다는 쪽으로 점점 기울고 있다는 생각이 듭니다.
 
-#### 개발 생태계
+### 개발 생태계
 - Java 는 Oracle, Spring 은 Pivotal 이라는 기업에서 governorship 을 가지고 유지보수를 하고 있습니다.
 - 반면에 Ruby 와 Rails 모두 오픈 커뮤니티에 의존하고 있습니다.
 - 각 언어, 프레임워크의 발전 속도, 안정성 측면에서 본다면, 아무래도 Java, Spring 쪽의 미래가 더 밝을 것이라고 예상해봅니다.
+
+### openapi 문서 작성의 편의성
+- Rails 에서도 API 문서를 작성하기 위해 직접 openapi.json(yml) 을 코드에서 관리할 수도 있고, 이를 편리하게 작성할 수 있도록 한 여러 시도들이 있습니다. 하지만 개발자가 신경을 써야하는 부분이 많다고 느꼈습니다.
+- 저희 드라마앤컴퍼니에서도 openapi.yaml 파일로 API 문서를 관리하고 있습니다.
+- Spring 진영에서는 springfox 라는 오픈소스 커뮤니티에서 제공하는 swagger-ui 라이브러리를 이용하면 java 어노테이션을 이용하여 보다 더 쉽게 작성을 할 수가 있습니다. Static Type 을 자동으로 읽어서 처리되기 때문에 개발자가 직접 properties 를 나열할 필요가 없습니다. 파라미터에 대한 세부 설명 또한 어노테이션으로 표현이 가능합니다.
+
+  ```java
+  @ApiOperation(value = "Find pet by Status",
+                notes = "${SomeController.findPetsByStatus.notes}"...)
+  @RequestMapping(value = "/findByStatus", method = RequestMethod.GET, params = {"status"})
+  public Pet findPetsByStatus(
+    @ApiParam(value = "${SomeController.findPetsByStatus.status}",
+              required = true,...)
+    @RequestParam("status", defaultValue="${SomeController.findPetsByStatus.status.default}") String status) {
+       //...
+   }
+
+  @ApiOperation(notes = "Operation 2", value = "${SomeController.operation2.value}"...)
+  @ApiImplicitParams(
+      @ApiImplicitParam(name="header1", value="${SomeController.operation2.header1}", ...)
+  )
+  @RequestMapping(value = "operation2", method = RequestMethod.POST)
+  public ResponseEntity<String> operation2() {
+     return ResponseEntity.ok("");
+  }
+  ```
+_from [springfox 공식 문서](https://springfox.github.io/springfox/docs/current/)_
+- 이걸 더 복잡하다고 생각하시는 분들도 계시겠지만, 저는 별도의 openapi.yml 파일을 직접 관리하는 것보다 더 좋았다고 느꼈습니다.
 
 여기까지 Spring 이 Rails 에 비해 더 강점인 부분들을 정리해봤습니다.
 
@@ -205,23 +256,32 @@ Rails has opinions about the best way to do many things in a web application, an
 ## 다른 이야기
 
 ### 생산성
-
 - Rails 는 생산성이 좋은 Web Application Framework 로 유명합니다. Spring 진영에서도 Spring Boot 가 나온 이래로 생산성은 Rails 못지 않다고 생각합니다. 단순히 생산성 측면 때문에 Spring 이 아니라 Rails 를 선택하는 일은 더 이상 존재하지 않는다고 생각합니다.
 - 오히려 IDE 에서 제공하는 강력한 기능과 관련해서는 static typing 을 하고 있는 언어인 java, kotlin 을 사용할 때가 더 유리하다고 생각합니다.
 
 ### Case convention
-
 - Ruby 는 sneak\_case 를, Java 에서는 camelCase 를 변수명, 메소드명을 지을 때의 관례로 사용하고 있습니다.
 - 개인적으로는 sneak\_case 보다 camelCase 가 가독성이 더 좋다고 생각하기도 하며, sneak\_case 를 사용할 때는 언더스코어라는 문자를 하나 더 입력해야하기 때문에 변수명, 메소드명이 좀 더 길어질 수 있는데 사소하지만, 언더스코어 문자 때문에 길어지는 것 자체는 다소 불편하다고 생각했습니다.
 
 ## 마무리
-
-지금 드라마앤컴퍼니의 개발팀팀에서는 Ruby on Rails 를 제외한 새로운 기술 스택 도입에 대한 논의가 활발하게 일어나고 있습니다. 아직까지는 Ruby on Rails 만으로 리멤버라는 서비스를 잘 지탱하고 있습니다.
-개인적으로는 대규모 채용, 서비스의 확장을 준비하는 과정에서 새로운 기술 스택으로 Spring Framework 를 도입하는 것에 대해 긍정적으로 생각하고 있습니다.
+지금 드라마앤컴퍼니의 개발팀팀에서는 Ruby on Rails 를 제외한 새로운 기술 스택 도입에 대한 논의가 활발하게 일어나고 있습니다.
 
 이전에는 Rails 만이 갖고 있던 강점들이 두드러졌으나, 시간이 지나면서 Spring 진영이 매우 빠른 속도로 진보하여 Rails 의 강점이 더 이상 Rails 만의 강점이라고 하기 어려워 진 것 같습니다.
 
-특히, 사용하는 곳이 점점 줄어들고 있음에 따라 Ruby 와 Rails 의 생태계의 발전 속도도 타 Framework 에 비해 느려지고 있다는 생각도 듭니다. 그렇다고 해서 거대한 서비스를 한 번에 다른 Framework 로 이전하기란 쉽지가 않습니다.
-과연 드라마앤컴퍼니에서 새로운 기술 스택을 도입하는 것이 폭발적인 성장을 만들어내는 데 큰 도움이 될 수 있을까를 생각 거리로 남기며 글을 마치겠습니다.
+저 개인적으로는 대규모 채용, 서비스의 확장을 준비하는 과정에서 새로운 기술 스택으로 Spring Framework 를 도입하는 것에 대해 긍정적으로 생각하고 있습니다.
+
+단순히 개발자의 새로운 것에 대한 호기심/갈망만으로 새로운 기술 스택 도입을 하는 실수를 범하지 않기 위해, 팀에서 필요성에 대한 공감대가 충분히 형성되면 머지 않은 미래에 점진적으로 도입을 시도해볼 것이라 예상해봅니다.
+
+하지만 지금도 저희 개발팀은 Ruby on Rails 로 리멤버라는 서비스를 잘 지탱하며 확장해나가고 있습니다.
+
+Ruby on Rails 도 Spring 만큼 성숙한 Framework 이며 오픈소스 커뮤니티만으로도 지속적인 진보를 이뤄내고 있습니다.
+
+그리고 새로운 기술 스택을 도입하려면 매우 큰 비용을 지불해야하기도 합니다. Spring 을 했다가 지금은 Rails 로 개발하고 있는 저로서는 Rails 도 만족스러운 Framework 이며 실제로 저희 개발팀 내부 설문조사에서도 만족도가 높다는 결과가 나왔습니다.
+
+중요한 것은 새로운 기술 스택 도입에 대해 지속적으로 신중히 논의 중인 지금도 저희 드라마앤컴퍼니 개발팀은 Rails 로 여러 기능을 빠르고 안정적으로 만들며 서비스를 확장해나가고 있다는 사실입니다.
+
+Rails 에 대한 경험이 없는 개발자들도 Rails 로 개발해보며 강점들을 느껴보면 시니어 개발자가 되기 위한 시야와 지식의 폭이 더 넓어지지 않을까요?
+
+
 
 읽어주셔서 감사합니다.
