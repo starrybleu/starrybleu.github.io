@@ -116,7 +116,7 @@ Rails has opinions about the best way to do many things in a web application, an
 
 ### 선언적인 API endpoints routing
 
-- Rails 에서는 routes.rb 파일에 웹 어플리케이션의 모든 API endpoint 들을 정의하게 되어있습니다. Sprng 에서는 Controller 클래스들과 Controller 의 메소드들에 개별적으로 어노테이션을 이용하여 선언하도록 되어있습니다. 선호도의 차이가 있을 수는 있지만, 선언적인 방식을 사용하는 Spring 의 방식이 훨씬 좋다고 생각합니다.
+- Rails 에서는 routes.rb 파일에 웹 어플리케이션의 모든 API endpoint 들을 정의하게 되어있습니다. Spring 에서는 Controller 클래스들과 Controller 의 메소드들에 개별적으로 어노테이션을 이용하여 선언하도록 되어있습니다. 선호도의 차이가 있을 수는 있지만, 선언적인 방식을 사용하는 Spring 의 방식이 훨씬 좋다고 생각합니다.
 - rotues.rb 에 모든 endpoints 를 정의했다고 하더라도, 연결된 controller 코드를 보면 어떤 endpoint 에 연결되어있는지 찾기가 쉽지 않습니다. 이를 보완하기 위해 컨트롤러 메소드 위에 endpoint 를 주석으로 달아놓기도 하지만, 그런다는 자체가 Spring 의 선언적인 방식을 쓰는 것이 더 좋다는 것을 인정하는 것처럼 느껴지기도 합니다. 주석으로 달아놓은 것은 실제로 실행되는 코드와는 무관하고, 틀릴 수도 있어서 팀에서 잘 관리하지 않으면 안 됩니다.
 - 그리고 특정 오류가 생긴 API 를 로그 시스템으로부터 발견하여 어떤 컨트롤러의 어떤 메소드에서 실행되는 코드인 것인지 찾기 위해 들이는 시간이 Spring 의 선언적인 방법으로 했을 때가 훨씬 적게 듭니다.
 
