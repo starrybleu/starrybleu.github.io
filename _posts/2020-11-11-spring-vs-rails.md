@@ -212,6 +212,7 @@ Rails has opinions about the best way to do many things in a web application, an
   }
 
   ```
+
 ### Static Type (Java, Kotlin)
 - Spring 을 개발할 때 주로 사용하는 언어인 Java 와 Kotlin 은 static type 을 채택하였습니다.
 - 최근 TypeScript 의 성장세, Ruby 도 3.0 버전 이후부터는 static type 을 지원하는 추세로 봐서는 엔터프라이즈 웹 어플리케이션을 개발할 때는 static type 이 더 유리하다는 쪽으로 점점 기울고 있다는 생각이 듭니다.
