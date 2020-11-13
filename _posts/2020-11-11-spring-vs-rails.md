@@ -51,6 +51,7 @@ Rails has opinions about the best way to do many things in a web application, an
 ### Ruby 언어의 강력함
 - Ruby 는 정말 인간 중심으로 설계된 언어라는 것을 체감하였습니다. Ruby world 에서는 모든 것이 Object 인 점을 만족하는 순수 객체지향 언어인 점은 Rails 라는 Framework 로 확장하는데 아주 큰 역할을 하였습니다.
 - 새로운 클래스, 메소드를 만들지 않고 기존 클래스의 기능을 손쉽게 확장 가능합니다. (meta programming)
+  - Kotlin 을 활용하여 Spring 으로 개발하면 이 장점을 활용할 것 같기도 합니다.
 - 이를 바탕으로 만들어진 여러 메소드들은 실제 Rails 에서 개발할 때 아주 활용도가 높습니다.
 - 이 점은 Java 에서 각종 Util 성 메소드를 모아놓은 class 를 별도로 만들어 쓰는 것과 대조적입니다.
 - 그리고 duck typing 이 가능하기 때문에 좀 더 간결하게 코드를 작성하는데도 도움이 됩니다.
@@ -89,6 +90,8 @@ Rails has opinions about the best way to do many things in a web application, an
 - Rails 에서는 DB 스키마가 code level 에서 관리되고 있습니다. Java + Spring Boot 의 경우에는 이를 개발자가 별도의 노력으로 관리를 해야만 code level 에서 확인하고 유지보수를 할 수 있는 반면, Rails 에서는 DB 스키마 변화에 대한 이력 관리가 거의 강제됩니다. 그래서 현재 상태만 표현하는 DB 의 이력 변화 내용을 code level 에서 확인할 수 있습니다.
 - DB 스키마 관리 방법도 2가지 이상 제공되고 있어서, 개발자(팀)의 선호도에 따라 그 방법을 선택할 수 있게 해준 점도 Rails 에서 잘 한 점이라고 생각합니다.
   - strucutre.sql, schema.rb
+- 한 가지 아쉬운점으로는, 이 스키마 파일을 바탕으로 Rails 에서 알아서 column 값에 대한 getter, setter 메소드를 자동으로 만들어주기 때문에 ActiveModel 클래스만 보고 어떤 필드를 갖고 있는지 확인하기 어렵고, 스키마 파일을 봐야만 한다는 점은 다소 아쉽긴 합니다.
+- Spring 에서 거의 de facto 로 사용되고 있는 JPA 를 이용한 코드를 보면 Entity class 에서 애플리케이션에 필요한 컬럼이 무엇인지 모두 확인이 가능한 부분은 명시적인 코드 측면에서 더 좋았다고 느꼈습니다.
 
 ### 이메일 발송 Preview
 
@@ -249,6 +252,7 @@ Rails has opinions about the best way to do many things in a web application, an
   ```
 _from [springfox 공식 문서](https://springfox.github.io/springfox/docs/current/)_
 - 이걸 더 복잡하다고 생각하시는 분들도 계시겠지만, 저는 별도의 openapi.yml 파일을 직접 관리하는 것보다 더 좋았다고 느꼈습니다.
+- springfox 에서 webflux, Kotlin 에 대한 대응이 늦는 등의 문제가 있어서 최근에는 [springdoc](https://springdoc.org) 을 더 많이 사용하는 추세라고 하네요.
 
 여기까지 Spring 이 Rails 에 비해 더 강점인 부분들을 정리해봤습니다.
 
